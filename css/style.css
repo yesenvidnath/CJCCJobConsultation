@@ -1,0 +1,434 @@
+* {
+  border: 0;
+  padding: 0;
+}
+
+body {
+  padding: 0;
+  order: 0;
+  font-family: poppins;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.navbar-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.navbar {
+  padding: 1em 0;
+  border-bottom: 1px solid black;
+}
+.navbar .logo-main {
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+.navbar ul li a {
+  color: black;
+}
+.navbar ul li a:hover {
+  color: #28A745;
+}
+.navbar ul li a:active {
+  color: #28A745;
+}
+.navbar button a {
+  color: white;
+}
+
+section.slider-section .carousel {
+  height: 90vh;
+  max-height: 500px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+section.slider-section .carousel img {
+  -o-object-fit: contain;
+     object-fit: contain;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+section.Job-cards-section {
+  padding: 2em 0;
+  /* Left column (job image) */
+  /* Right column (job details) */
+  /* Job title style */
+}
+section.Job-cards-section .card-text .read-more a {
+  text-decoration: none;
+  color: #28A745;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+section.Job-cards-section .modal-backdrop.show {
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+section.Job-cards-section .modal-dialog-centered {
+  display: flex;
+  align-items: center;
+  min-height: calc(100% - 1rem);
+}
+section.Job-cards-section .modal-lg {
+  max-width: 800px;
+}
+section.Job-cards-section .modal-body-content {
+  display: flex;
+  justify-content: space-between;
+}
+section.Job-cards-section .modal-body-content .left-column {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding-right: 15px;
+}
+section.Job-cards-section .modal-body-content .right-column {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding-left: 15px;
+}
+section.Job-cards-section .modal-body-content h5 {
+  margin-top: 0;
+}
+
+footer {
+  border-top: 1px solid black;
+}
+footer .container {
+  padding: 3em 0 0 0 !important;
+}
+footer .container ul li i {
+  color: #28A745;
+}
+footer .container ul li a {
+  color: black;
+}
+footer .container ul li a:hover {
+  color: #28A745;
+}
+footer .container ul li a:active {
+  color: #28A745;
+}
+
+.login-page-section .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.login-page-section .form-container {
+  margin: 5px;
+  border-radius: 15px;
+  border: 1px solid #28A745;
+}
+.login-page-section .form-container img {
+  background-image: url(/assets/login_imgs/1.png);
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  border-radius: 15px 0 0 15px;
+}
+.login-page-section .form-container .col-md-8 {
+  padding: 8em 0 5em 2em;
+}
+.login-page-section .form-container .col-md-8 ul li a {
+  color: black;
+}
+.login-page-section .form-container .col-md-8 ul li a:hover {
+  color: #28A745;
+}
+.login-page-section .form-container .col-md-8 ul li a:active {
+  color: #28A745;
+}
+.login-page-section .form-container .col-md-8 .tab-content {
+  padding-top: 20px;
+}
+.login-page-section .form-container .nav.nav-tabs {
+  padding-top: 30px;
+}
+.login-page-section .tab-content {
+  width: 40em;
+}
+
+section.Job-apply-section {
+  height: 120vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section.Job-apply-section .card {
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 0 2em;
+  padding: 5em 1em 5em 1em;
+}
+section.Job-apply-section .card img {
+  width: 100%;
+}
+section.Job-apply-section .card h2 {
+  padding-bottom: 13px;
+}
+section.Job-apply-section .card .label-job {
+  background: #28A745;
+  padding: 5px 10px;
+  width: 35%;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+}
+section.Job-apply-section .card .job-desc {
+  font-size: 18px;
+}
+section.Job-apply-section .custom-dropdown {
+  position: relative;
+}
+section.Job-apply-section .dropdown-toggle {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  text-align: left;
+}
+section.Job-apply-section .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  min-width: 100%; /* Set the minimum width to 100% */
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+section.Job-apply-section .dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+section.Job-apply-section .dropdown-item span {
+  padding-left: 15px;
+  font-weight: 400;
+}
+section.Job-apply-section .dropdown-item:hover,
+section.Job-apply-section .dropdown-item:focus {
+  color: #1e7e34;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.075);
+}
+section.Job-apply-section .popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+}
+section.Job-apply-section .popup button {
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+section.appli-dashbord-section {
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10em 0;
+}
+section.appli-dashbord-section .nav-tabs {
+  margin-bottom: 5px;
+}
+section.appli-dashbord-section .nav-tabs a.nav-link {
+  color: #28A745;
+  font-weight: 500;
+  padding-top: 15px 10px;
+}
+section.appli-dashbord-section .nav-tabs:hover {
+  color: #28A745;
+  background: #fff;
+}
+section.appli-dashbord-section .card.margin-bottom-custom {
+  margin-bottom: 25px;
+}
+section.appli-dashbord-section .tab-pane .status-cancelled {
+  padding: 5px 8px;
+  background: #ff1e1e;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+section.appli-dashbord-section .tab-pane .status-active {
+  padding: 5px 8px;
+  background: #28a745;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+section.con-dashbord-section {
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10em 0;
+}
+section.con-dashbord-section .nav-tabs {
+  margin-bottom: 5px;
+}
+section.con-dashbord-section .nav-tabs a.nav-link {
+  color: #28A745;
+  font-weight: 500;
+  padding-top: 15px 10px;
+}
+section.con-dashbord-section .nav-tabs:hover {
+  color: #28A745;
+  background: #fff;
+}
+section.con-dashbord-section .card.margin-bottom-custom {
+  margin-bottom: 25px;
+}
+section.con-dashbord-section .tab-pane .status-cancelled {
+  padding: 5px 8px;
+  background: #ff1e1e;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+section.con-dashbord-section .tab-pane .status-active {
+  padding: 5px 8px;
+  background: #28a745;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+section.admin-dashbord-section {
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10em 0;
+}
+section.admin-dashbord-section .nav-tabs {
+  margin-bottom: 5px;
+}
+section.admin-dashbord-section .nav-tabs a.nav-link {
+  color: #28A745;
+  font-weight: 500;
+  padding-top: 15px 10px;
+}
+section.admin-dashbord-section .nav-tabs:hover {
+  color: #28A745;
+  background: #fff;
+}
+section.admin-dashbord-section .card.margin-bottom-custom {
+  margin-bottom: 25px;
+}
+section.admin-dashbord-section .card-body {
+  padding: 20px 30px;
+}
+section.admin-dashbord-section .card-body .count-wrap {
+  margin-bottom: 20px;
+}
+section.admin-dashbord-section .card-body .count-wrap span.count-custom {
+  padding: 5px 8px;
+  background: #28a745;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+#formContainer, #formContainer2, #formContainer3, #formContainer4, #formContainer5, #formContainer6 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  border-radius: 10px;
+  width: 1200px;
+}
+
+/* Dim the background when the popup is open */
+.overlay, .overlay2, .overlay3, .overlay4, .overlay5, .overlay6 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.table-responsive.mt-5 {
+  max-height: 800px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+  margin-left: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 50px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #42ad5b;
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #5fb373;
+}/*# sourceMappingURL=style.css.map */
