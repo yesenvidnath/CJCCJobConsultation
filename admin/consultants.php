@@ -21,7 +21,7 @@
         $action = $_POST['action'];
         $con_id = $_POST['Con_ID'];
         $user_id = $_POST['User_ID'];
-        $con_img = $_POST['Con_Img'];
+        $con_img = $_FILES['Con_Img']['tmp_name'];
         $con_first_name = $_POST['Con_First_Name'];
         $con_last_name = $_POST['Con_Last_Name'];
         $con_address = $_POST['Con_Address'];
@@ -34,16 +34,49 @@
 
         switch ($action) {
             case 'insert':
+
+                // $target_dir = "assets/con_imgs/";  // Update to match your directory structure
+                // $target_file = $target_dir . basename($_FILES["Con_Img"]["name"]);
+                
+                if (isset($_FILES['Con_Img'])) {
+                    $target_file = "assets/con_imgs/" . basename($_FILES["Con_Img"]["name"]);
+                
+                    if (move_uploaded_file($_FILES["Con_Img"]["tmp_name"], $target_file)) {
+                        $con_img = $target_file;
+                        echo "<div class='alert alert-success'> The image has been uploaded. </div>";
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
+                    }
+                }
+                
                 $sql = "INSERT INTO Consultant (User_ID, Con_Img, Con_First_Name, Con_Last_Name, Con_Address, Con_Skype_No, Con_TP_No, Con_Avilable_Start_Time, Con_Avilable_End_Time, Con_Avilability, Con_Discription) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("isssssssssss", $user_id, $con_img, $con_first_name, $con_last_name, $con_address, $con_skype_no, $con_tp_no, $con_start_time, $con_end_time, $con_availability, $con_description);
+                $stmt->bind_param("issssssssssi", $user_id, $con_img, $con_first_name, $con_last_name, $con_address, $con_skype_no, $con_tp_no, $con_start_time, $con_end_time, $con_availability, $con_description, $con_id);
+
                 $stmt->execute();
                 break;
 
             case 'update':
+                
+                // // Update target directory and file path
+                // $target_dir = "assets/con_imgs/";  // Update to match your directory structure
+                // $target_file = $target_dir . basename($_FILES["Con_Img"]["name"]);
+
+                if (isset($_FILES['Con_Img'])) {
+                    $target_file = "assets/con_imgs/" . basename($_FILES["Con_Img"]["name"]);
+                
+                    if (move_uploaded_file($_FILES["Con_Img"]["tmp_name"], $target_file)) {
+                        $con_img = $target_file;
+                        echo "<div class='alert alert-success'> The image has been uploaded. </div>";
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
+                    }
+                }
+                
                 $sql = "UPDATE Consultant SET User_ID=?, Con_Img=?, Con_First_Name=?, Con_Last_Name=?, Con_Address=?, Con_Skype_No=?, Con_TP_No=?, Con_Avilable_Start_Time=?, Con_Avilable_End_Time=?, Con_Avilability=?, Con_Discription=? WHERE Con_ID=?";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("isssssssssssi", $user_id, $con_img, $con_first_name, $con_last_name, $con_address, $con_skype_no, $con_tp_no, $con_start_time, $con_end_time, $con_availability, $con_description, $con_id);
+                $stmt->bind_param("issssssssssi", $user_id, $con_img, $con_first_name, $con_last_name, $con_address, $con_skype_no, $con_tp_no, $con_start_time, $con_end_time, $con_availability, $con_description, $con_id);
+
                 $stmt->execute();
                 break;
 
@@ -84,7 +117,7 @@
 
     <div class="row">
         <div class="col-md-4">
-            <form id="searchForm" method="POST">
+            <form id="searchForm" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <div class="row">
                         <div class="col-6"><label for="Con_ID">Consultant ID:</label></div>
