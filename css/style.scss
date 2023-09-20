@@ -161,8 +161,10 @@ footer {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 100vh;
+        // height: 150vh;
+        margin: 10em auto;
     }
+
 
     .form-container {
         margin: 5px;
@@ -541,5 +543,3 @@ section.admin-dashbord-section{
   ::-webkit-scrollbar-thumb:hover {
     background: #5fb373; 
   }
-
-

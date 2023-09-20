@@ -125,7 +125,7 @@ footer .container ul li a:active {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  margin: 10em auto;
 }
 .login-page-section .form-container {
   margin: 5px;

@@ -3,25 +3,10 @@
   //Connnection methode
   include('connect.php');
 ?>
-<!-- Login Methode Start -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Login</title>
-    
-</head>
-<body>
-
 
 <?php
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email']) && isset($_POST['password'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -44,12 +29,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 }
 
-
-// Handle sign up form submission
+// Handle sign-up form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['signup'])) {
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $address = $_POST['address'];
+    $skypeId = $_POST['skypeId'];
+    $tpNo = $_POST['tpNo'];
+    $dob = $_POST['dob'];
     $email = $_POST['signupEmail'];
     $password = $_POST['signupPassword'];
-    $userType = $_POST['userType'];
 
     // Check if the email is already registered
     $sql = "SELECT User_ID FROM Users WHERE User_Email = '$email'";
@@ -58,18 +47,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['signup'])) {
     if ($result->num_rows > 0) {
         $signupError = "Email already registered. Please use a different email.";
     } else {
-        // Insert new user data into the database
-        $sql = "INSERT INTO Users (User_Type, User_Email, User_Password) VALUES ('$userType', '$email', '$password')";
+        // Insert new user data into the Users table with User_Type set to "JobSeeker"
+        $userType = "JobSeeker";
+        $sql = "INSERT INTO Users (User_Type, User_Email, User_Password)
+                VALUES ('$userType', '$email', '$password')";
+        
         if ($conn->query($sql) === TRUE) {
-            // User registration successful, redirect to login page
-            header('Location: login.php');
-            exit();
+            // Get the User_ID of the newly created user
+            $user_id = $conn->insert_id;
+            $apliimagefixed = "assets/appli_imgs/test-img.jpg";
+            // Insert job seeker (applicant) data into the Applicants table
+            $sql = "INSERT INTO Applicants (User_ID, Appli_Img, Appli_First_Name, Appli_Last_Name, Appli_Address, Appli_Skype_ID, Appli_TP_No, Appli_DOB)
+        VALUES ('$user_id', '$apliimagefixed', '$firstName', '$lastName', '$address', '$skypeId', '$tpNo', '$dob')";
+            
+            if ($conn->query($sql) === TRUE) {
+                // Applicant registration successful, refresh the page
+                $conn->close();
+                echo '<script>window.location.reload();</script>';
+                exit();
+            } else {
+                // Applicant registration failed, show error message or handle as needed
+                $signupError = "Error creating applicant. Please try again later.";
+            }
+            
         } else {
             // User registration failed, show error message or handle as needed
             $signupError = "Error creating user. Please try again later.";
         }
     }
 }
+
 
 $conn->close();
 ?>
@@ -122,25 +129,78 @@ $conn->close();
                         <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="signup-tab">
 
                             <form method="POST">
-                                <!-- Sign Up form fields -->
-                                <div class="form-group">
-                                    <label for="userType">User Type</label>
-                                    <select class="form-control" id="userType" name="userType">
-                                        <option value="Consultant">Consultant</option>
-                                        <option value="JobSeeker">Job Seeker</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="signupEmail">Email address</label>
-                                    <input type="email" class="form-control" id="signupEmail" name="signupEmail" placeholder="Enter email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="signupPassword">Password</label>
-                                    <input type="password" class="form-control" id="signupPassword" name="signupPassword" placeholder="Password">
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="firstName">First Name</label>
+                                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="lastName">Last Name</label>
+                                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter last name" required>
+                                        </div>
+                                    </div>
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="address">Address</label>
+                                            <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="skypeId">Skype ID</label>
+                                            <input type="text" class="form-control" id="skypeId" name="skypeId" placeholder="Enter Skype ID" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="tpNo">TP Number</label>
+                                            <input type="tel" class="form-control" id="tpNo" name="tpNo" placeholder="Enter TP number" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="dob">Date of Birth</label>
+                                            <input type="date" class="form-control" id="dob" name="dob" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="signupEmail">Email address</label>
+                                            <input type="email" class="form-control" id="signupEmail" name="signupEmail" placeholder="Enter email" required>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="applicantImg">Applicant Image</label>
+                                            <input type="file" class="form-control-file" id="applicantImg" name="applicantImg">
+                                        </div>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label for="signupPassword">Password</label>
+                                        <input type="password" class="form-control" id="signupPassword" name="signupPassword" placeholder="Password">
+
+                                    </div>
+                                </div>
+
+
+
                                 <button type="submit" name="signup" class="btn btn-success">Sign Up</button>
+
                             </form>
+
                             <?php
                             if (isset($signupError)) {
                                 echo '<p class="text-danger">' . $signupError . '</p>';

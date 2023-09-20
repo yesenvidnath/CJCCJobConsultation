@@ -9,20 +9,32 @@
         $job_country = '';
         $job_disc = '';
         $job_end_date = '';
-        $Job_image = '';
+        $job_image = '';
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
             $action = $_POST['action'];
             $job_id = $_POST['Job_ID'];
             $job_title = $_POST['Job_Title'];
-            $job_country = $_POST['Job_country']; // Fixed: added missing field
-            $job_image = $_POST['Job_image'];
+            $job_country = $_POST['Job_country'];
             $job_disc = $_POST['Job_Disc'];
             $job_end_date = $_POST['Job_End_Date'];
 
-
             switch ($action) {
+
                 case 'insert':
+                    // Update target directory and file path
+                    $target_dir = "assets/job_imgs/";  // Update to match your directory structure
+                    $target_file = $target_dir . basename($_FILES["Job_image"]["name"]);
+
+                    if (move_uploaded_file($_FILES["Job_image"]["tmp_name"], $target_file)) {
+                        $job_image = $target_file;
+                        echo "<div class='alert alert-success'> The file image has been uploaded. </div>";
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
+                    }
+
+                    // Insert data into the database
                     $sql = "INSERT INTO jobs (Job_Title, Job_country, Job_Disc, Job_End_Date, Job_Image) VALUES (?, ?, ?, ?, ?)";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("sssss", $job_title, $job_country, $job_disc, $job_end_date, $job_image);
@@ -30,6 +42,19 @@
                     break;
 
                 case 'update':
+
+                    // Update target directory and file path
+                    $target_dir = "assets/job_imgs/";  // Update to match your directory structure
+                    $target_file = $target_dir . basename($_FILES["Job_image"]["name"]);
+
+                    if (move_uploaded_file($_FILES["Job_image"]["tmp_name"], $target_file)) {
+                        $job_image = $target_file;
+                        echo "The file ". basename( $_FILES["Job_image"]["name"]). " has been uploaded.";
+                    } else {
+                        echo "<div class='alert alert-success'> The file image has been uploaded. </div>";
+                    }
+
+                    // Update data in the database
                     $sql = "UPDATE jobs SET Job_Title=?, Job_country=?, Job_Disc=?, Job_End_Date=?, Job_Image=? WHERE Job_ID=?";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("sssssi", $job_title, $job_country, $job_disc, $job_end_date, $job_image, $job_id);
@@ -66,8 +91,11 @@
     ?>
 
     <div class="row">
+
         <div class="col-md-4">
-            <form id="searchForm" method="POST">
+
+            <form id="searchForm" method="POST" enctype="multipart/form-data">
+
                 <div class="form-group">
                     <label for="Job_ID">Job ID:</label>
                     <input type="text" class="form-control" id="Job_ID" name="Job_ID" value="<?php echo $job_id; ?>" required>
@@ -91,11 +119,11 @@
                 <div class="form-group">
                     <label for="Job_Image">Job Image:</label>
                     <input type="file" class="form-control-file" id="Job_Image" name="Job_image">
-                        <?php if (!empty($job_image)) : ?>
-                            <div class="mt-2">
-                                <img id="uploadedImage" src="<?php echo $job_image; ?>" alt="Job_Image Image" style="max-width: 150px;">
-                            </div>
-                        <?php endif; ?>
+                    <?php if (!empty($job_image)) : ?>
+                        <div class="mt-2">
+                            <img id="uploadedImage" src="<?php echo $job_image; ?>" alt="Job_Image Image" style="max-width: 150px;">
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="modal-footer">
                     <div class="container-fluid button-container-custom">
@@ -112,7 +140,9 @@
                         </div>
                     </div>
                 </div>
+
             </form>
+
         </div>
 
         <div class="col-md-8">

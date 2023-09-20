@@ -21,7 +21,7 @@
         $action = $_POST['action'];
         $appli_id = $_POST['Appli_ID'];
         $user_id = $_POST['User_ID'];
-        $appli_img = $_POST['Appli_Img'];
+        // $appli_img = $_POST['Appli_Img'];
         $appli_first_name = $_POST['Appli_First_Name'];
         $appli_last_name = $_POST['Appli_Last_Name'];
         $appli_address = $_POST['Appli_Address'];
@@ -30,8 +30,21 @@
         $appli_dob = $_POST['Appli_DOB'];
         $appli_resume = $_POST['Appli_Resume'];
 
+        $appli_img = $_FILES['Appli_Img']['name']; 
         switch ($action) {
             case 'insert':
+
+                // Update target directory and file path
+                $target_dir = "assets/appli_imgs/";  // Update to match your directory structure
+                $target_file = $target_dir . basename($_FILES["Appli_Img"]["name"]);
+                
+                if (move_uploaded_file($_FILES["Appli_Img"]["tmp_name"], $target_file)) {
+                    $appli_img = $target_file;
+                    echo "<div class='alert alert-success'> The image has been uploaded. </div>";
+                } else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
+
                 $sql = "INSERT INTO Applicants (User_ID, Appli_Img, Appli_First_Name, Appli_Last_Name, Appli_Address, Appli_Skype_ID, Appli_TP_No, Appli_DOB, Appli_Resume) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("issssssss", $user_id, $appli_img, $appli_first_name, $appli_last_name, $appli_address, $appli_skype_id, $appli_tp_no, $appli_dob, $appli_resume);
@@ -67,7 +80,20 @@
                     echo "<div class='alert alert-warning'>No applicant found with the given ID</div>";
                 }
                 break;
+
             case 'update':
+
+                // Update target directory and file path
+                $target_dir = "assets/appli_imgs/";  // Update to match your directory structure
+                $target_file = $target_dir . basename($_FILES["Appli_Img"]["name"]);
+
+                if (move_uploaded_file($_FILES["Appli_Img"]["tmp_name"], $target_file)) {
+                    $appli_img = $target_file;
+                    echo "<div class='alert alert-success'> The image has been uploaded. </div>";
+                } else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
+                    
                 $sql = "UPDATE Applicants SET User_ID=?, Appli_Img=?, Appli_First_Name=?, Appli_Last_Name=?, Appli_Address=?, Appli_Skype_ID=?, Appli_TP_No=?, Appli_DOB=?, Appli_Resume=? WHERE Appli_ID=?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("issssssssi", $user_id, $appli_img, $appli_first_name, $appli_last_name, $appli_address, $appli_skype_id, $appli_tp_no, $appli_dob, $appli_resume, $appli_id);
@@ -80,7 +106,8 @@
 
     <div class="row">
         <div class="col-md-4">
-            <form id="searchForm" method="POST">
+            <form id="searchForm" method="POST" enctype="multipart/form-data">
+
                 <div class="form-group">
                     <div class="row">
                         <div class="col-6"><label for="Appli_ID">Applicant ID:</label></div>
@@ -99,6 +126,7 @@
                         <div class="col-6"> <label for="Appli_Img">Applicant Image:</label></div>
                         <div class="col-6">
                             <input type="file" class="form-control-file" id="Appli_Img" name="Appli_Img">
+
                             <?php if (!empty($appli_img)) : ?>
                                 <div class="mt-2">
                                     <img id="uploadedImage" src="<?php echo $appli_img; ?>" alt="Applicant Image" style="max-width: 150px;">
