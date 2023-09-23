@@ -1,3 +1,5 @@
+<!-- This is for Testing purpuses only  -->
+
 <?php
   include('template_parts/header-footer/header-admin.php');
   //Connnection methode
